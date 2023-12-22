@@ -30,10 +30,15 @@ fun main() {
     // поговорим
     val m1 = watsApp.addMessage(user1, "привет")
     val m2 = watsApp.addMessage(user1, "как дела")
+    println(".. " + watsApp.getUnreadMessagesCount(user1))
     val m3 = watsApp.addMessage(user1, "чо по чем")
+    println(".. " + watsApp.getUnreadMessagesCount(user1))
     val m300 = watsApp.addMessage(user1, "а чувычка пунс", author = user1)
+    println(watsApp.getUnreadChatsCount())
 
     val m4 = watsApp.addMessage(user2, "привет!")
+    println(watsApp.getUnreadChatsCount())
+    println(".. " + watsApp.getUnreadMessagesCount(user2))
 
     println(m1)
     println(m2)
@@ -44,11 +49,33 @@ fun main() {
     println()
     watsApp.editMessage(user1, m3, "что делаешь")
     watsApp.showMessage(user1)
-    println()
+    println("..до удаления")
     watsApp.editMessage(user1, m1, "доброе утро")
     watsApp.showMessage(user1)
-    println()
+    println("..после удаления")
     watsApp.delMessage(user1, m2)
     watsApp.showMessage(user1)
+    println()
+    println(watsApp.getUnreadMessagesCount(user1))
+    watsApp.showLastMessage(user1)
+
+    watsApp.readMessage(m300)
+    println("..show after reading")
+    println(m300)
+
+    println("..read to message")
+    watsApp.showMessage(user1, 2)
+
+    watsApp.delMessage(user1,m1)
+    watsApp.delMessage(user1,m3)
+    println("..show after del : showMessage")
+    watsApp.showMessage(user1)
+
+    println("..show after del : showLastMessage")
+    watsApp.showLastMessage(user1)
+
+    //watsApp.showLastMessage(user1)
+    //watsApp.showLastMessage(user2)
+    //watsApp.showLastMessage(user1)
 
 }
