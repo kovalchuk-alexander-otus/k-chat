@@ -31,8 +31,9 @@ fun main() {
     val m1 = watsApp.addMessage(user1, "привет")
     val m2 = watsApp.addMessage(user1, "как дела")
     val m3 = watsApp.addMessage(user1, "чо по чем")
+    val m300 = watsApp.addMessage(user1, "а чувычка пунс", author = user1)
 
-    val m4 = watsApp.addMessage(user2, "привет")
+    val m4 = watsApp.addMessage(user2, "привет!")
 
     println(m1)
     println(m2)

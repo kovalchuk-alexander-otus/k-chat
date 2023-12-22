@@ -9,16 +9,11 @@ import java.util.HashMap
  * Сервис обмена сообщениями
  *
  * TODO: Возможности для пользователя:
- *  - Видеть, сколько чатов не прочитано (например, service.getUnreadChatsCount). В каждом из таких чатов есть хотя бы одно непрочитанное сообщение.
- *  - Получить список чатов (например, service.getChats).
- *  - Получить список последних сообщений из чатов (можно в виде списка строк). Если сообщений в чате нет (все были удалены), то пишется «нет сообщений».
- *  - Получить список сообщений из чата, указав:
+ *  getUnreadChatsCount() - Видеть, сколько чатов не прочитано. В каждом из таких чатов есть хотя бы одно непрочитанное сообщение.
+ *  showLastMessage() - Получить список последних сообщений из чатов (можно в виде списка строк). Если сообщений в чате нет (все были удалены), то пишется «нет сообщений».
+ *  showMessage(num: Int) - Получить список сообщений из чата, указав:
  *     - ID собеседника;
  *     - количество сообщений. После того как вызвана эта функция, все отданные сообщения автоматически считаются прочитанными.
- *  - Создать новое сообщение.
- *  - Удалить сообщение.
- *  - Создать чат. Чат создаётся, когда пользователю отправляется первое сообщение.
- *  - Удалить чат, т. е. целиком удалить всю переписку.
  */
 
 object ChatService {
@@ -56,9 +51,11 @@ object ChatService {
 
     /**
      * Создать сообщение
+     * Чат создаётся, когда пользователю отправляется первое сообщение.
      */
-    fun addMessage(user: User, text: String, onlyOne: Boolean? = false): Message? {
-        chats[user]?.messages?.add(Message(owner, text, System.currentTimeMillis(), onlyOne))
+    fun addMessage(user: User, text: String, onlyOne: Boolean? = false, author: User? = owner): Message? {
+        if (!chats.contains(user)) addChat(user)
+        chats[user]?.messages?.add(Message(author ?: owner, text, System.currentTimeMillis(), onlyOne))
         return chats[user]?.messages?.last()
     }
 
