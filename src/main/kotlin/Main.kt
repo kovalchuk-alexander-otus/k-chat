@@ -2,6 +2,17 @@ import data.User
 import service.ChatService
 
 fun main() {
+    val owner = User("Коваленко Иван", "koba", "koba@mail.ru")
+
+    // владелец ставит себе вацапу-гравицапу
+    val watsApp = ChatService
+    watsApp.init(owner)
+}
+
+/**
+ * Отладка на стадии реализации
+ */
+fun debug() {
     println("test")
     val t = System.currentTimeMillis()
 
@@ -66,8 +77,8 @@ fun main() {
     println("..read to message")
     watsApp.showMessage(user1, 2)
 
-    watsApp.delMessage(user1,m1)
-    watsApp.delMessage(user1,m3)
+    watsApp.delMessage(user1, m1)
+    watsApp.delMessage(user1, m3)
     println("..show after del : showMessage")
     watsApp.showMessage(user1)
 
@@ -77,5 +88,4 @@ fun main() {
     //watsApp.showLastMessage(user1)
     //watsApp.showLastMessage(user2)
     //watsApp.showLastMessage(user1)
-
 }

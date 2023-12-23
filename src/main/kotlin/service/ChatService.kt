@@ -16,7 +16,11 @@ import java.util.HashMap
 
 object ChatService {
     private lateinit var owner: User
-    private val chats: MutableMap<User, Chat> = HashMap() // список чатов конкретного Пользователя
+    val chats: MutableMap<User, Chat> = HashMap() // список чатов конкретного Пользователя
+
+    fun getOwner(): User {
+        return owner
+    }
 
     /**
      * Инициализация сервиса
@@ -93,6 +97,7 @@ object ChatService {
      */
     fun readMessage(message: Message?) {
         message?.isReading = true
+        println(message?.text)
     }
 
     /**
@@ -110,7 +115,7 @@ object ChatService {
         chats.get(user)?.messages?.forEach { m ->
             if (++i > count) return
             readMessage(m)
-            println(m)
+            if (m.onlyOne == true) delMessage(user, m)
         }
     }
 
@@ -120,5 +125,12 @@ object ChatService {
     fun showLastMessage(user: User) {
         val result = chats.get(user)?.messages?.filter { m -> m.isReading == false } ?: emptyList()
         if (result.isEmpty()) println("нет сообщений") else result.forEach(::println)
+    }
+
+    /**
+     * ONLY FOR TEST
+     */
+    fun clear(){
+        chats.clear()
     }
 }
