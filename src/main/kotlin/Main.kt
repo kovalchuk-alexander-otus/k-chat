@@ -35,12 +35,12 @@ fun debug() {
     println()
 
     // манипуляции с чатами
-    var listChats = watsApp.showChats()
+    var listChats = watsApp.getChats()
     watsApp.printListWithNewLines(listChats)
 
     watsApp.delChat(user2)
     println()
-    watsApp.showChats()
+    watsApp.getChats()
 
     // поговорим
     val m1 = watsApp.addMessage(user1, "привет")
@@ -61,36 +61,36 @@ fun debug() {
     println(m4)
 
     println("..отладка printToScreen..")
-    var listMessage = watsApp.showMessage(user1)
+    var listMessage = watsApp.getMessage(user1)
     watsApp.printListWithNewLines(listMessage)
 
     println()
     watsApp.editMessage(user1, m3, "что делаешь")
-    watsApp.showMessage(user1)
+    watsApp.getMessage(user1)
     println("..до удаления")
     watsApp.editMessage(user1, m1, "доброе утро")
-    watsApp.showMessage(user1)
+    watsApp.getMessage(user1)
     println("..после удаления")
     watsApp.delMessage(user1, m2)
-    watsApp.showMessage(user1)
+    watsApp.getMessage(user1)
     println()
     println(watsApp.getUnreadMessagesCount(user1))
-    watsApp.showLastMessage(user1)
+    watsApp.getLastMessage(user1)
 
     watsApp.readMessage(user1, m300)
     println("..show after reading")
     println(m300)
 
     println("..read to message")
-    watsApp.showMessage(user1, 2)
+    watsApp.getMessage(user1, 2)
 
     watsApp.delMessage(user1, m1)
     watsApp.delMessage(user1, m3)
     println("..show after del : showMessage")
-    watsApp.showMessage(user1)
+    watsApp.getMessage(user1)
 
     println("..show after del : showLastMessage")
-    watsApp.showLastMessage(user1)
+    watsApp.getLastMessage(user1)
 
     //watsApp.showLastMessage(user1)
     //watsApp.showLastMessage(user2)

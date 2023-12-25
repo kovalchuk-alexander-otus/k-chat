@@ -45,7 +45,7 @@ object ChatService {
     /**
      * Просмотр списка имеющихся чатов
      */
-    fun showChats(): List<String> {
+    fun getChats(): List<String> {
         return chats.map { m -> m.key.nickName }.sorted().toList()
     }
 
@@ -93,15 +93,17 @@ object ChatService {
     /**
      * Сообщение прочитано (не перегружаем функцию информацией о чате - чисто работаем с Сообщением)
      */
-    fun readMessage(user: User, message: Message?) {
-        message?.isReading = true
-        if (message?.onlyOne == true) delMessage(user, message)
+    fun readMessage(user: User, message: Message?): Message? {
+        return message?.also {
+            it.isReading = true
+            if (it.onlyOne == true) delMessage(user, it)
+        }
     }
 
     /**
      * Просмотр последних сообщений из чата
      */
-    fun showMessage(user: User): List<String> {
+    fun getMessage(user: User): List<String> {
         return chats.get(user)?.messages?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date }
             ?.map { m -> m.text }?.toList() ?: emptyList()
     }
@@ -109,7 +111,7 @@ object ChatService {
     /**
      * Читаем несколько сообщений
      */
-    fun showMessage(user: User, count: Int): List<String> {
+    fun getMessage(user: User, count: Int): List<String> {
         return chats.get(user)?.messages?.take(count)?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date }
             ?.map { m -> m.text }?.toList() ?: emptyList()
     }
@@ -117,8 +119,8 @@ object ChatService {
     /**
      * Получить список непрочитанных сообщений
      */
-    fun showLastMessage(user: User): List<String> {
-        return chats.get(user)?.messages?.takeLast(getUnreadMessagesCount(user))?.onEach { m -> readMessage(user, m) }
+    fun getLastMessage(user: User): List<String> {
+        return chats[user]?.messages?.takeLast(getUnreadMessagesCount(user))?.onEach { m -> readMessage(user, m) }
             ?.sortedBy { m -> m.date }?.map { m -> m.text }?.toList() ?: listOf(noMessage)
     }
 

@@ -28,6 +28,8 @@ gradle test jacocoTestReport
 [oreilly : The forEach and onEach functions](https://www.oreilly.com/library/view/android-development-with/9781787123687/a38426f6-7ab7-4cd9-9e89-f2e80bc089fb.xhtml)  
 [kotlinlang : take](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/take.html)  
 [alexanderklimov : with, apply, also, run, let](https://developer.alexanderklimov.ru/android/kotlin/with-apply-also.php)  
+[kotlinlang : also](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/also.html)  
+[kotlinlang : Функции области видимости](https://kotlinlang.ru/docs/scope-functions.html)  
 
 ## How
 [devGang : Java: как проверить, содержит ли строка подстроку](https://dev-gang.ru/article/java-kak-proverit-soderzhit-li-stroka-podstroku-0c4hoa1j3h/)  
