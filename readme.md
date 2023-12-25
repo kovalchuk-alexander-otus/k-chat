@@ -23,8 +23,11 @@ gradle test jacocoTestReport
 ## Lambda & Stream
 [kotlinlang : Filtering collections](https://kotlinlang.org/docs/collection-filtering.html)  
 [stackoverflow : Kotlin How to use java streams .map() in kotlin to map a different object response](https://stackoverflow.com/questions/54753856/kotlin-how-to-use-java-streams-map-in-kotlin-to-map-a-different-object-respon)  
-[stackoverflow : How can I filter an ArrayList in Kotlin so I only have elements which match my condition?](https://stackoverflow.com/questions/44098709/how-can-i-filter-an-arraylist-in-kotlin-so-i-only-have-elements-which-match-my-c)
-[educba : Kotlin forEach](https://www.educba.com/kotlin-foreach/)
+[stackoverflow : How can I filter an ArrayList in Kotlin so I only have elements which match my condition?](https://stackoverflow.com/questions/44098709/how-can-i-filter-an-arraylist-in-kotlin-so-i-only-have-elements-which-match-my-c)  
+[educba : Kotlin forEach](https://www.educba.com/kotlin-foreach/)  
+[oreilly : The forEach and onEach functions](https://www.oreilly.com/library/view/android-development-with/9781787123687/a38426f6-7ab7-4cd9-9e89-f2e80bc089fb.xhtml)  
+[kotlinlang : take](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/take.html)  
+[alexanderklimov : with, apply, also, run, let](https://developer.alexanderklimov.ru/android/kotlin/with-apply-also.php)  
 
 ## How
 [devGang : Java: как проверить, содержит ли строка подстроку](https://dev-gang.ru/article/java-kak-proverit-soderzhit-li-stroka-podstroku-0c4hoa1j3h/)  
