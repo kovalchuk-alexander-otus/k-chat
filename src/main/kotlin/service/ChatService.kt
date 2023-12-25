@@ -14,7 +14,7 @@ object ChatService {
     private lateinit var owner: User
     val chats: MutableMap<User, Chat> = HashMap() // список чатов конкретного Пользователя
 
-    val noMessage: String = "нет сообщений"
+    private const val noMessage: String = "нет сообщений"
 
     fun getOwner(): User {
         return owner
@@ -31,8 +31,8 @@ object ChatService {
      * Создание нового чата
      */
     private fun addChat(user: User): Chat? {
-        chats.put(user, Chat(mutableListOf()))
-        return chats.get(user)
+        chats[user] = Chat(mutableListOf())
+        return chats[user]
     }
 
     /**
@@ -125,8 +125,8 @@ object ChatService {
     /**
      * Печать сообщений на экран
      */
-    fun printToScreen(listText: List<String>) {
-        listText.onEach { m -> println(m) }
+    fun <T> printListWithNewLines(list: List<T>) {
+        list.forEach { item -> println(item) }
     }
 
     /**

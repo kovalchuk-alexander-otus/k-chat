@@ -7,6 +7,8 @@ fun main() {
     // владелец ставит себе вацапу-гравицапу
     val watsApp = ChatService
     watsApp.init(owner)
+
+    debug()
 }
 
 /**
@@ -34,7 +36,7 @@ fun debug() {
 
     // манипуляции с чатами
     var listChats = watsApp.showChats()
-    watsApp.printToScreen(listChats)
+    watsApp.printListWithNewLines(listChats)
 
     watsApp.delChat(user2)
     println()
@@ -60,7 +62,7 @@ fun debug() {
 
     println("..отладка printToScreen..")
     var listMessage = watsApp.showMessage(user1)
-    watsApp.printToScreen(listMessage)
+    watsApp.printListWithNewLines(listMessage)
 
     println()
     watsApp.editMessage(user1, m3, "что делаешь")
