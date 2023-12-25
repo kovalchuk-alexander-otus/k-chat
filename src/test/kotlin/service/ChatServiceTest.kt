@@ -51,7 +51,7 @@ class ChatServiceTest {
      */
     @Test
     fun delChatTest() {
-        watsApp.addChat(user1)
+        watsApp.addMessage(user1, "message")
         watsApp.delChat(user1)
 
         assert(!watsApp.chats.containsKey(user1))
@@ -62,21 +62,21 @@ class ChatServiceTest {
      */
     @Test
     fun getUnreadChatsCountTest() {
-        watsApp.addChat(user1)
-        val m1 = watsApp.addMessage(user2, "message")
+        val m = watsApp.addMessage(user1, "message")
 
         assertEquals(1, watsApp.getUnreadChatsCount())
 
+        val m1 = watsApp.addMessage(user2, "message")
         val m2 = watsApp.addMessage(user1, "message")
         val m3 = watsApp.addMessage(user1, "message", false, owner)
 
         assertEquals(2, watsApp.getUnreadChatsCount())
 
-        watsApp.readMessage(m1)
+        watsApp.readMessage(user2, m1)
 
         assertEquals(1, watsApp.getUnreadChatsCount())
 
-        watsApp.readMessage(m2)
+        watsApp.readMessage(user1, m2)
 
         assertEquals(1, watsApp.getUnreadChatsCount())
     }
@@ -92,7 +92,7 @@ class ChatServiceTest {
 
         assertEquals(3, watsApp.getUnreadMessagesCount(user1))
 
-        watsApp.readMessage(m2)
+        watsApp.readMessage(user1, m2)
 
         assertEquals(2, watsApp.getUnreadMessagesCount(user1))
 

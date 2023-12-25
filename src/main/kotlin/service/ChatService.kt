@@ -8,15 +8,13 @@ import java.util.HashMap
 /**
  * Сервис обмена сообщениями
  *
- * TODO: описать тесты
- * TODO: настроить ci
- *
- * TODO: уточниться по требованиям - не следует ли описать какую-то свою функцию
  */
 
 object ChatService {
     private lateinit var owner: User
     val chats: MutableMap<User, Chat> = HashMap() // список чатов конкретного Пользователя
+
+    val noMessage: String = "нет сообщений"
 
     fun getOwner(): User {
         return owner
@@ -32,7 +30,7 @@ object ChatService {
     /**
      * Создание нового чата
      */
-    fun addChat(user: User): Chat? {
+    private fun addChat(user: User): Chat? {
         chats.put(user, Chat(mutableListOf()))
         return chats.get(user)
     }
@@ -47,22 +45,22 @@ object ChatService {
     /**
      * Просмотр списка имеющихся чатов
      */
-    fun showChats() {
-        chats.forEach(::println)
+    fun showChats(): List<String> {
+        return chats.map { m -> m.key.nickName }.sorted().toList()
     }
 
     /**
      * Число чатов с непрочитанными сообщениями
      */
     fun getUnreadChatsCount(): Int {
-        return chats.filter { c -> c.value.messages.filter { m -> m.isReading == false }.isNotEmpty() }.count()
+        return chats.count { c -> c.value.messages.any { m -> m.isReading == false } }
     }
 
     /**
      * Число непрочитанных сообщений в чате
      */
     fun getUnreadMessagesCount(user: User): Int {
-        return chats.get(user)?.messages?.filter { m -> m.isReading == false }?.count() ?: 0
+        return chats[user]?.messages?.count { m -> !m.isReading } ?: 0
     }
 
     /**
@@ -95,42 +93,46 @@ object ChatService {
     /**
      * Сообщение прочитано (не перегружаем функцию информацией о чате - чисто работаем с Сообщением)
      */
-    fun readMessage(message: Message?) {
+    fun readMessage(user: User, message: Message?) {
         message?.isReading = true
-        println(message?.text)
+        if (message?.onlyOne == true) delMessage(user, message)
     }
 
     /**
-     * Просмотр сообщений из чата
+     * Просмотр последних сообщений из чата
      */
-    fun showMessage(user: User) {
-        chats.get(user)?.messages?.forEach(::println)
+    fun showMessage(user: User): List<String> {
+        return chats.get(user)?.messages?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date }
+            ?.map { m -> m.text }?.toList() ?: emptyList()
     }
 
     /**
      * Читаем несколько сообщений
      */
-    fun showMessage(user: User, count: Int) {
-        var i = 0
-        chats.get(user)?.messages?.forEach { m ->
-            if (++i > count) return
-            readMessage(m)
-            if (m.onlyOne == true) delMessage(user, m)
-        }
+    fun showMessage(user: User, count: Int): List<String> {
+        return chats.get(user)?.messages?.take(count)?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date }
+            ?.map { m -> m.text }?.toList() ?: emptyList()
     }
 
     /**
      * Получить список непрочитанных сообщений
      */
-    fun showLastMessage(user: User) {
-        val result = chats.get(user)?.messages?.filter { m -> m.isReading == false } ?: emptyList()
-        if (result.isEmpty()) println("нет сообщений") else result.forEach(::println)
+    fun showLastMessage(user: User): List<String> {
+        return chats.get(user)?.messages?.takeLast(getUnreadMessagesCount(user))?.onEach { m -> readMessage(user, m) }
+            ?.sortedBy { m -> m.date }?.map { m -> m.text }?.toList() ?: listOf(noMessage)
+    }
+
+    /**
+     * Печать сообщений на экран
+     */
+    fun printToScreen(listText: List<String>) {
+        listText.onEach { m -> println(m) }
     }
 
     /**
      * ONLY FOR TEST
      */
-    fun clear(){
+    fun clear() {
         chats.clear()
     }
 }

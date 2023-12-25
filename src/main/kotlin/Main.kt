@@ -26,14 +26,16 @@ fun debug() {
     watsApp.init(owner)
 
     // владелец заводит чаты
-    val c1 = watsApp.addChat(user1)
-    val c2 = watsApp.addChat(user2)
+    val c1 = watsApp.addMessage(user1, "эм")
+    val c2 = watsApp.addMessage(user2, "эм")
     println(c1)
     println(c2)
     println()
 
     // манипуляции с чатами
-    watsApp.showChats()
+    var listChats = watsApp.showChats()
+    watsApp.printToScreen(listChats)
+
     watsApp.delChat(user2)
     println()
     watsApp.showChats()
@@ -56,7 +58,10 @@ fun debug() {
     println(m3)
     println(m4)
 
-    watsApp.showMessage(user1)
+    println("..отладка printToScreen..")
+    var listMessage = watsApp.showMessage(user1)
+    watsApp.printToScreen(listMessage)
+
     println()
     watsApp.editMessage(user1, m3, "что делаешь")
     watsApp.showMessage(user1)
@@ -70,7 +75,7 @@ fun debug() {
     println(watsApp.getUnreadMessagesCount(user1))
     watsApp.showLastMessage(user1)
 
-    watsApp.readMessage(m300)
+    watsApp.readMessage(user1, m300)
     println("..show after reading")
     println(m300)
 
