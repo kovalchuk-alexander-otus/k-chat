@@ -6,5 +6,15 @@ package data
  *  В каждом чате есть прочитанные и непрочитанные сообщения.
  */
 data class Chat(
+    val user: User, // собеседник
     val messages: MutableList<Message>,  // список сообщений
-)
+):Printed {
+    val noMessage: String = "Нет чатов"
+    override fun getInfo(): String {
+        return user.nickName
+    }
+
+    override fun getEmptyValue(): String {
+        return noMessage
+    }
+}

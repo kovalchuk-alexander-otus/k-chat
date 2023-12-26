@@ -1,3 +1,5 @@
+import data.Chat
+import data.Message
 import data.User
 import service.ChatService
 
@@ -36,7 +38,7 @@ fun debug() {
 
     // манипуляции с чатами
     var listChats = watsApp.getChats()
-    watsApp.printListWithNewLines(listChats)
+    watsApp.printListWithNewLines(listChats, Chat::class.java)
 
     watsApp.delChat(user2)
     println()
@@ -62,7 +64,7 @@ fun debug() {
 
     println("..отладка printToScreen..")
     var listMessage = watsApp.getMessage(user1)
-    watsApp.printListWithNewLines(listMessage)
+    watsApp.printListWithNewLines(listMessage, Message::class.java)
 
     println()
     watsApp.editMessage(user1, m3, "что делаешь")

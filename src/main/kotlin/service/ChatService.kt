@@ -2,6 +2,7 @@ package service
 
 import data.Chat
 import data.Message
+import data.Printed
 import data.User
 import java.util.HashMap
 
@@ -13,8 +14,6 @@ import java.util.HashMap
 object ChatService {
     private lateinit var owner: User
     val chats: MutableMap<User, Chat> = HashMap() // список чатов конкретного Пользователя
-
-    private const val noMessage: String = "нет сообщений"
 
     fun getOwner(): User {
         return owner
@@ -31,7 +30,7 @@ object ChatService {
      * Создание нового чата
      */
     private fun addChat(user: User): Chat? {
-        chats[user] = Chat(mutableListOf())
+        chats[user] = Chat(user, mutableListOf())
         return chats[user]
     }
 
@@ -45,8 +44,8 @@ object ChatService {
     /**
      * Просмотр списка имеющихся чатов
      */
-    fun getChats(): List<String> {
-        return chats.map { m -> m.key.nickName }.sorted().toList()
+    fun getChats(): List<Chat> {
+        return chats.map<User, Chat, Chat> { (u, c) -> c }.sortedBy { c -> c.user.nickName }.toList()
     }
 
     /**
@@ -103,32 +102,39 @@ object ChatService {
     /**
      * Просмотр последних сообщений из чата
      */
-    fun getMessage(user: User): List<String> {
-        return chats.get(user)?.messages?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date }
-            ?.map { m -> m.text }?.toList() ?: emptyList()
+    fun getMessage(user: User): List<Message> {
+        return chats[user]?.messages?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date } ?: emptyList()
     }
 
     /**
      * Читаем несколько сообщений
      */
-    fun getMessage(user: User, count: Int): List<String> {
-        return chats.get(user)?.messages?.take(count)?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date }
-            ?.map { m -> m.text }?.toList() ?: emptyList()
+    fun getMessage(user: User, count: Int): List<Message> {
+        return chats[user]?.messages?.take(count)?.onEach { m -> readMessage(user, m) }?.sortedBy { m -> m.date }
+            ?: emptyList()
     }
 
     /**
      * Получить список непрочитанных сообщений
      */
-    fun getLastMessage(user: User): List<String> {
+    fun getLastMessage(user: User): List<Message> {
         return chats[user]?.messages?.takeLast(getUnreadMessagesCount(user))?.onEach { m -> readMessage(user, m) }
-            ?.sortedBy { m -> m.date }?.map { m -> m.text }?.toList() ?: listOf(noMessage)
+            ?.sortedBy { m -> m.date } ?: emptyList()
     }
 
     /**
      * Печать сообщений на экран
      */
-    fun <T> printListWithNewLines(list: List<T>) {
-        list.forEach { item -> println(item) }
+    fun <T : Printed> printListWithNewLines(list: List<T>, type: Class<T>) {
+        if (list.isEmpty()) {
+            when (type) {
+                Message::class.java -> println("Нет сообщений")
+                Chat::class.java -> println("Нет чатов")
+                else -> println("Список пуст")
+            }
+        } else {
+            list.forEach { println(it.getInfo()) }
+        }
     }
 
     /**
