@@ -13,12 +13,15 @@ data class Message(
 ) : Printed {
     constructor() : this(User(), "")
 
-    val noMessage: String = "Нет сообщений"
     override fun getInfo(): String {
         return text
     }
 
     override fun getEmptyValue(): String {
-        return noMessage
+        return NO_MESSAGE
+    }
+
+    companion object {
+        const val NO_MESSAGE = "Нет сообщений"
     }
 }

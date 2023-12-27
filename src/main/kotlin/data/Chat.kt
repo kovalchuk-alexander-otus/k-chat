@@ -11,12 +11,15 @@ data class Chat(
 ) : Printed {
     constructor() : this(User(), mutableListOf())
 
-    val noMessage: String = "Нет чатов"
     override fun getInfo(): String {
-        return user?.nickName ?: ""
+        return user.nickName
     }
 
     override fun getEmptyValue(): String {
-        return noMessage
+        return NO_MESSAGE
+    }
+
+    companion object{
+        const val NO_MESSAGE = "Нет чатов"
     }
 }
