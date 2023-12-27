@@ -127,14 +127,9 @@ object ChatService {
      * Печать сообщений на экран
      */
     fun <T : Printed> printListWithNewLines(list: List<T>, type: Class<T>) {
-        val obj: T = type.newInstance()
         if (list.isEmpty()) {
+            val obj: T = type.newInstance()
             println(obj.getEmptyValue())
-            /*when (type) {
-                Message::class.java -> println("Нет сообщений")
-                Chat::class.java -> println("Нет чатов")
-                else -> println("Список пуст")
-            }*/
         } else {
             list.forEach { println(it.getInfo()) }
         }
