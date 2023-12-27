@@ -5,6 +5,7 @@ import data.Message
 import data.Printed
 import data.User
 import java.util.HashMap
+import java.util.function.Consumer
 
 /**
  * Сервис обмена сообщениями
@@ -45,14 +46,14 @@ object ChatService {
      * Просмотр списка имеющихся чатов
      */
     fun getChats(): List<Chat> {
-        return chats.map<User, Chat, Chat> { (u, c) -> c }.sortedBy { c -> c.user.nickName }.toList()
+        return chats.map<User, Chat, Chat> { (u, c) -> c }.sortedBy { c -> c.user?.nickName }.toList()
     }
 
     /**
      * Число чатов с непрочитанными сообщениями
      */
     fun getUnreadChatsCount(): Int {
-        return chats.count { c -> c.value.messages.any { m -> m.isReading == false } }
+        return chats.count { c -> c.value.messages?.any { m -> m.isReading == false } ?: false }
     }
 
     /**
@@ -126,12 +127,14 @@ object ChatService {
      * Печать сообщений на экран
      */
     fun <T : Printed> printListWithNewLines(list: List<T>, type: Class<T>) {
+        val obj: T = type.newInstance()
         if (list.isEmpty()) {
-            when (type) {
+            println(obj.getEmptyValue())
+            /*when (type) {
                 Message::class.java -> println("Нет сообщений")
                 Chat::class.java -> println("Нет чатов")
                 else -> println("Список пуст")
-            }
+            }*/
         } else {
             list.forEach { println(it.getInfo()) }
         }

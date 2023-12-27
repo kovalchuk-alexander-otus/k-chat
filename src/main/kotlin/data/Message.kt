@@ -11,6 +11,8 @@ data class Message(
     val onlyOne: Boolean? = false, // признак того, что сообщение после прочтения удаляется из чата
     var isReading: Boolean = false // признак того, что сообщение прочитано
 ) : Printed {
+    constructor() : this(User(), "")
+
     val noMessage: String = "Нет сообщений"
     override fun getInfo(): String {
         return text

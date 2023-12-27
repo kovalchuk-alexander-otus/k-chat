@@ -8,10 +8,12 @@ package data
 data class Chat(
     val user: User, // собеседник
     val messages: MutableList<Message>,  // список сообщений
-):Printed {
+) : Printed {
+    constructor() : this(User(), mutableListOf())
+
     val noMessage: String = "Нет чатов"
     override fun getInfo(): String {
-        return user.nickName
+        return user?.nickName ?: ""
     }
 
     override fun getEmptyValue(): String {

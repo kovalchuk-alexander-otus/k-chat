@@ -30,6 +30,7 @@ gradle test jacocoTestReport
 [alexanderklimov : with, apply, also, run, let](https://developer.alexanderklimov.ru/android/kotlin/with-apply-also.php)  
 [kotlinlang : also](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/also.html)  
 [kotlinlang : Функции области видимости](https://kotlinlang.ru/docs/scope-functions.html)  
+[kotlinlang : Встроенные (inline) функции](https://kotlinlang.ru/docs/inline-functions.html)  
 
 ## How
 [devGang : Java: как проверить, содержит ли строка подстроку](https://dev-gang.ru/article/java-kak-proverit-soderzhit-li-stroka-podstroku-0c4hoa1j3h/)  

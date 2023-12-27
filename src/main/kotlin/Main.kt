@@ -29,6 +29,9 @@ fun debug() {
     val watsApp = ChatService
     watsApp.init(owner)
 
+    var listChats = watsApp.getChats()
+    watsApp.printListWithNewLines(listChats, Chat::class.java)
+
     // владелец заводит чаты
     val c1 = watsApp.addMessage(user1, "эм")
     val c2 = watsApp.addMessage(user2, "эм")
@@ -37,7 +40,7 @@ fun debug() {
     println()
 
     // манипуляции с чатами
-    var listChats = watsApp.getChats()
+    listChats = watsApp.getChats()
     watsApp.printListWithNewLines(listChats, Chat::class.java)
 
     watsApp.delChat(user2)
@@ -90,9 +93,17 @@ fun debug() {
     watsApp.delMessage(user1, m3)
     println("..show after del : showMessage")
     watsApp.getMessage(user1)
-
     println("..show after del : showLastMessage")
     watsApp.getLastMessage(user1)
+
+    println()
+    listMessage = watsApp.getMessage(user1)
+    watsApp.printListWithNewLines(listMessage, Message::class.java)
+
+    println()
+    listMessage.forEach{m -> watsApp.delMessage(user1, m)}
+    listMessage = watsApp.getMessage(user1)
+    watsApp.printListWithNewLines(listMessage, Message::class.java)
 
     //watsApp.showLastMessage(user1)
     //watsApp.showLastMessage(user2)
